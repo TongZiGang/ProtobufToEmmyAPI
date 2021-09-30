@@ -1,0 +1,115 @@
+import "commons.proto";
+package com.gy.server.packet;
+ 
+option java_package = "com.gy.server.packet";
+option java_outer_classname = "PbActivity";
+ 
+// -------------------------------测试注释-------------------------------
+ 
+//战斗状态
+enum BattleStatus {
+    NO_START = 1;                            //未开启
+    BATTLE = 2;                              //战斗状态，允许玩家自由争夺位置
+    SETTLEMENT = 3;                          //结算状态，做一系列结算操作，不允许玩家战斗
+    RESET = 4;                               //重置状态
+    SLEEP = 5;                               //休眠状态，只有控制器能唤醒
+    CHANGE = 6;                              //切换状态
+}
+ 
+//这是一段ActivityInfo 前置测试注释1
+message ActivityInfo {//这是一段ActivityInfo 前置测试注释2
+    optional ActivityModule module = 1;
+    optional ActivityData data = 2;
+    optional int64 startTime = 3; //活动开启时间
+    optional int64 endTime = 4; //活动结束时间
+    //这是一个注释
+    optional BattleStatus battleStatus = 5; //枚举测试
+ 
+ 
+}//这是一段ActivityInfo 后置测试注释
+ 
+ 
+// ***************************测试注释***************************
+ 
+ 
+message ActivityModule {
+    //这是一段测试注释
+    optional int32 type = 1;//类型
+    optional int32 activityId = 2;
+    optional TaskActivityModule task = 10;
+}
+ 
+message ActivityData {
+    optional TaskActivityData tasks = 8; 								//任务活动
+}
+ 
+ 
+//任务活动
+message TaskActivityModule {
+    repeated int32 receivedIds = 1; //已领取的奖励ID集合
+    repeated TaskActivity tasks = 2; //任务进度
+    repeated int32 receivedTaskIds = 3; //已接取任务ID集合
+ 
+    message TaskActivity {
+        optional int32 id = 1; //条目ID
+        optional int64 curProgress = 2; //当前进度
+        optional int64 totalProgress = 3; //总进度
+    }
+}
+ 
+//任务活动数据
+message TaskActivityData {
+    repeated TaskActivityItem items = 1;
+ 
+    message TaskActivityItem {
+        optional int32 id = 1;
+        optional int32 goalId = 2; //目标ID
+        repeated PbReward rewards = 3; //常规奖励
+        optional int32 vipLimit = 4; //vip等级限制
+        optional string jump = 5; //跳转数据
+        optional bool isSelectReward = 6; //是否选择奖励
+		optional int32 resetFrequency = 7;		//重置频率，1每日，2每周，3每月
+    }
+}
+ 
+ 
+ message ServerTime
+{
+    // 服务器时间戳
+    int64 timestamp = 1;
+    // 服务器年份
+    int32 year = 2;
+    // 服务器月份
+    int32 month = 3;
+    // 服务器日期
+    int32 day = 4;
+    // 服务器小时数
+    int32 hour = 5;
+    // 服务器分钟数
+    int32 minute = 6;
+    // 服务器秒数
+    int32 second = 7;
+    // 服务器时区
+    int32 timezone = 8;
+    // 服务器配置版本号
+    int32 configVersion = 9;
+    // 安卓版本
+    string andVersion = 10;
+    // ios版本
+    string iosVersion = 11;
+    // 0:无防沉迷时长限制, 1:即将达到防沉迷时长
+    int32 dueToExpire = 12;
+    // 客户端发送时间
+    int64 clientTime = 13;
+}
+//最后一次对社团数据进行操作的相关时间
+message LastOpGroupDataTime
+{
+    int64 groupListTime        = 1; //最后一次拉取社团列表时间
+    int64 groupRankTime        = 2; //最后一次拉取社团活跃度排行榜时间
+    int64 groupRecruitTime     = 3; //最后一次社团招募时间
+    int64 groupWarRankAreaTime = 4; //最后一次拉取社团战区排行榜时间
+    int64 groupWarRankAllTime  = 5; //最后一次拉取社团战区排行榜时间
+    int64 serverGroupListTime  = 6; //最后一次拉取跨服社团列表时间
+    int64 serverGroupRankTime  = 7; //最后一次拉取跨服社团活跃度排行榜时间
+}

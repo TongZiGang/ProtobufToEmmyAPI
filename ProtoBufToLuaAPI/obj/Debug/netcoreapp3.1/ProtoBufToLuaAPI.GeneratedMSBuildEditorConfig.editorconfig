@@ -1,0 +1,3 @@
+is_global = true
+build_property.RootNamespace = ProtoBufToLuaAPI
+build_property.ProjectDir = F:\Study\protobuf-to-emmylua-api\ProtoBufToLuaAPI\ProtoBufToLuaAPI\
