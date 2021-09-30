@@ -1,0 +1,4 @@
+# ProtobufToEmmyAPI
+为Protobuf导出供EmmyLua使用的类表
+
+将protobuf文件放在控制台工程的父目录下即可
